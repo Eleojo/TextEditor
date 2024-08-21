@@ -71,9 +71,6 @@ Once the application is running:
 - **Create new documents** by clicking on the "Create" button.
 - **Edit or delete documents** from your document list.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
@@ -81,7 +78,6 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ## Contact
 
-For any inquiries, please contact [your email address].
+For any inquiries, please contact [adegbeeleojo@gmail.com].
 ```
-
-Replace `"yourusername"` with your GitHub username and `"your email address"` with your actual email address before using the README.
+adegbeeleojo@gmail.com
