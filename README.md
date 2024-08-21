@@ -1,5 +1,4 @@
 
-```markdown
 # TextEditor
 
 TextEditor is an ASP.NET Core MVC application designed for creating, editing, and managing text documents with user authentication. This project demonstrates the use of ASP.NET Identity, Entity Framework Core, and integration with a rich text editor.
