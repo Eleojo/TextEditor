@@ -1,47 +1,42 @@
 ﻿@model IEnumerable<TextEditor.Models.Doc>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Documents";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row mb-4">
+        <div class="col-12 col-md-4 col-lg-3 mb-3">
+            <div class="card shadow-sm text-center" style="background-color: #f8f9fa;">
+                <div class="card-body d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <a class="display-1 text-decoration-none" style="color: #28a745;" asp-action="Create">
+                        <i class="material-icons" style="font-size: 4rem;">add_circle</i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <strong style="color: #28a745;">New Document</strong>
+            </div>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="col-12 col-md-4 col-lg-3 mb-3">
+                <div class="card shadow-sm text-center" style="background-color: #e3f2fd;">
+                    <div class="card-body d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <a class="display-1 text-decoration-none" style="color: #007bff;" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="material-icons" style="font-size: 4rem;">insert_drive_file</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="text-center mt-2">
+                    <strong style="color: #007bff;">@item.Title</strong>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

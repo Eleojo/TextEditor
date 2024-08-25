@@ -26,7 +26,9 @@ namespace TextEditor.Controllers
         // GET: Docs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Docs.Include(d => d.User);
+            var applicationDbContext = from c in _context.Docs select c;
+            applicationDbContext = applicationDbContext.Where(a => a.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Console.WriteLine(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -54,12 +56,8 @@ namespace TextEditor.Controllers
             if (string.IsNullOrEmpty(doc.UserId))
             {
                 ModelState.AddModelError(string.Empty, "User is not logged in.");
-                return View(doc);
+                return View(doc.Content);
             }
-
-            
-
-            
 
             if (ModelState.IsValid)
             {
@@ -78,7 +76,7 @@ namespace TextEditor.Controllers
                 }
             }
 
-            return View(doc);
+            return View(doc.Content);
         }
 
 
@@ -135,6 +133,15 @@ namespace TextEditor.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                // Log validation errors
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", doc.UserId);
             return View(doc);
