@@ -1,10 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model TextEditor.Models.Doc
-@inject UserManager<IdentityUser> UserManager
+@inject UserManager<IdentityUser> userManager
+
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Document";
+    
+   
 }
+
+<!-- Your form code here -->
+
+
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -14,13 +21,11 @@
                     <h3>Create Document</h3>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Create">
+                    <form asp-action="Create" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                        <div class="form-group d-none">
-                            <input asp-for="Id" class="form-control" value="Untitled Document" />
-                            <span asp-validation-for="Id" class="text-danger"></span>
-                        </div>
+                       
+                        <input type="hidden" asp-for="Id" id="docId" />
 
                         <div class="form-group">
                             <label asp-for="Title" class="control-label"></label>
@@ -34,9 +39,8 @@
                             <span asp-validation-for="Content" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
-                            <input type="hidden" asp-for="UserId" class="form-control" value="@UserManager.GetUserId(User)" />
-                        </div>
+                        <input type="hidden" asp-for="UserId" value="@userManager.GetUserId(User)" />
+                        @* <p>User ID: @UserManager.GetUserId(User)</p> *@
 
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-success">Save Document</button>
@@ -52,6 +56,17 @@
 @section Scripts {
     <script src="https://cdn.tiny.cloud/1/l6haf2e7akcnaewlxno0oh0al8skhpg8x1e8a0nw1diqy8go/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
+        // JavaScript function to generate a GUID
+        function generateGuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Assign the generated GUID to the hidden input field
+        document.getElementById('docId').value = generateGuid();
+
         tinymce.init({
             selector: '#tiny',
             height: 500,
@@ -68,6 +83,11 @@
             ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
         });
     </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

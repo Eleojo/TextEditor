@@ -10,9 +10,9 @@ namespace TextEditor.Models
         public string Title { get; set; }
         public string Content { get; set; }
         [Required] 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         [ForeignKey("UserId")]
-        public IdentityUser User { get; set; }
+        public IdentityUser? User { get; set; }
 
     }
 }
