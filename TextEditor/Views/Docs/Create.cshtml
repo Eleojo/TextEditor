@@ -8,34 +8,34 @@
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h3>Create Document</h3>
+        <div class="col-md-10 col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient-primary text-white py-4">
+                    <h3 class="mb-0">Create Document</h3>
                 </div>
-                <div class="card-body">
-                    <form asp-action="Create" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="card-body p-5">
+                    <form asp-action="Create" method="post" id="createDocForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
 
                         <input type="hidden" asp-for="Id" id="docId" />
 
-                        <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
-                            <input asp-for="Title" class="form-control" placeholder="Enter document title" />
+                        <div class="mb-4">
+                            <label asp-for="Title" class="form-label fw-bold">Title</label>
+                            <input asp-for="Title" class="form-control form-control-lg" placeholder="Enter document title" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group mt-4">
-                            <label asp-for="Content" class="control-label"></label>
-                            <textarea id="tiny" asp-for="Content" class="form-control tinymce"></textarea>
+                        <div class="mb-5">
+                            <label asp-for="Content" class="form-label fw-bold">Content</label>
+                            <textarea id="tiny" asp-for="Content" class="form-control form-control-lg" rows="15"></textarea>
                             <span asp-validation-for="Content" class="text-danger"></span>
                         </div>
 
                         <input type="hidden" asp-for="UserId" value="@userManager.GetUserId(User)" />
 
-                        <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-success">Save Document</button>
-                            <a class="btn btn-secondary ml-2" asp-action="Index">Cancel</a>
+                        <div class="d-flex justify-content-between">
+                            <a class="btn btn-secondary btn-lg" asp-action="Index">Cancel</a>
+                            <button type="submit" class="btn btn-success btn-lg">Save Document</button>
                         </div>
                     </form>
                 </div>
@@ -44,10 +44,21 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        // Function to generate a GUID
+        function generateGUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
 
-@{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        // Set the generated GUID in the hidden Id field when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            var docIdInput = document.getElementById("docId");
+            docIdInput.value = generateGUID();
+        });
+    </script>
 }
-
-
-  

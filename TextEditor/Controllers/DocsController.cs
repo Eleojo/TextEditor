@@ -76,7 +76,7 @@ namespace TextEditor.Controllers
                 }
             }
 
-            return View(doc.Content);
+            return View(doc);
         }
 
 
